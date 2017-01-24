@@ -4,21 +4,19 @@ import url from 'url';
 
 const methods = ['get', 'post', 'put', 'patch', 'del'];
 
-// const DEFAULT_TIMEOUT = 8000;
-const serverUrl = process.env.SERVER_URL;
-const defaultHeader = {
-  'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
-  'Content-Type': 'application/json'
-};
-
 function makeHeaders(headers, req) {
-  const _object = {};
+  // const DEFAULT_TIMEOUT = 8000;
+  const _header = {
+    'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
+    'Content-Type': 'application/json'
+  };
+
   if (headers && headers.useMasterKey) {
     delete headers.useMasterKey;
-    _object['X-Parse-Master-Key'] = process.env.MASTER_KEY || 'myMasterKey';
+    _header['X-Parse-Master-Key'] = process.env.MASTER_KEY || 'myMasterKey';
   }
 
-  const _headers = Object.assign(_object, defaultHeader, headers || {});
+  const _headers = Object.assign({}, _header, headers || {});
 
   // sessionToken from session
   const { session = {} } = req;
@@ -81,7 +79,7 @@ function makeUrl(_url, data) {
 }
 
 function restCall(method, _url, data, _headers, formData) {
-  const requestUrl = _url.indexOf('://') > -1 ? _url : url.resolve(serverUrl, _url);
+  const requestUrl = _url.indexOf('://') > -1 ? _url : url.resolve(process.env.SERVER_URL, _url);
 
   const requestParams = {
     // timeout: DEFAULT_TIMEOUT,
