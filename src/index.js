@@ -1,6 +1,5 @@
 import request from 'request';
 import qs from 'querystring';
-import url from 'url';
 
 const methods = ['get', 'post', 'put', 'patch', 'del'];
 
@@ -47,8 +46,8 @@ function qsStringify(str) {
   return stringified;
 }
 
-function makeUrl(_url, data) {
-  if (!data) return _url;
+function makeUrl(url, data) {
+  if (!data) return url;
 
   const query = JSON.parse(JSON.stringify(data)); // deep clone object
 
@@ -56,30 +55,30 @@ function makeUrl(_url, data) {
   if (!query.objectId && !query.order) query.order = '-createdAt';
 
   // if the user wants to add 'include' or 'key' (or other types of) constraints while getting only one object
-  // objectId can be added to the query object and is deleted after it's appended to the _url
+  // objectId can be added to the query object and is deleted after it's appended to the url
   if (query.objectId) {
-    _url += '/' + query.objectId;
+    url += '/' + query.objectId;
     delete query.objectId;
   }
 
   // check to see if there is a 'where' object in the query object
   // the 'where' object need to be stringified by JSON.stringify(), not querystring
   if (typeof query.where === 'object' && Object.keys(query.where).length) {
-    _url += '?where=' + encodeURIComponent(JSON.stringify(query.where));
+    url += '?where=' + encodeURIComponent(JSON.stringify(query.where));
   }
   delete query.where;
 
   // if there are no more constraints left in the query object 'remainingQuery' will be an empty string
   const remainingQuery = qsStringify(query);
   if (remainingQuery) {
-    _url += (_url.indexOf('?') === -1 ? '?' : '&') + remainingQuery;
+    url += (url.indexOf('?') === -1 ? '?' : '&') + remainingQuery;
   }
 
-  return _url;
+  return url;
 }
 
-function restCall(method, _url, data, _headers, formData) {
-  const requestUrl = _url.indexOf('://') > -1 ? _url : url.resolve(process.env.SERVER_URL, _url);
+function restCall(method, url, data, _headers, formData) {
+  const requestUrl = url.indexOf('://') > -1 ? url : process.env.SERVER_URL + url;
 
   const requestParams = {
     // timeout: DEFAULT_TIMEOUT,
@@ -146,7 +145,7 @@ function restCall(method, _url, data, _headers, formData) {
 /**
 * api call
 * @method ['get', 'post', 'put', 'patch', 'del']
-* @param (String) _url
+* @param (String) url
 * @param (Object) data
 * @param (Object) headers
 * @param (Object) formData
@@ -154,8 +153,8 @@ function restCall(method, _url, data, _headers, formData) {
 export default class ParseRest {
   constructor(req) {
     methods.forEach((method) => {
-      this[method] = (_url, data, headers, formData) => {
-        return restCall(method, _url, data, makeHeaders(headers, req), formData);
+      this[method] = (url, data, headers, formData) => {
+        return restCall(method, url, data, makeHeaders(headers, req), formData);
       };
     });
   }
