@@ -1,7 +1,7 @@
 Parse Rest NodeJS
 =================
 
-[![NPM version][npm-image]][npm-url]
+[![npm version](https://badge.fury.io/js/parse-rest-nodejs.svg)](https://badge.fury.io/js/parse-rest-nodejs)
 
 Install
 -------
