@@ -32,7 +32,7 @@ process.env.MASTER_KEY = "__master_key__";
 * All methods are returned Promise.
 
 ```javascript
-parseRest.get('/classes/__className__/').then((success) => {
+parseRest.get('/classes/__className__').then((success) => {
   console.log(success);
 }, (error) => {
   console.error(error);
