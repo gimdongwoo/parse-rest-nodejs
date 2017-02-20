@@ -1,6 +1,6 @@
 {
   "name": "parse-rest-nodejs",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Parse-server Rest API client for Node.js",
   "main": "lib/index.js",
   "scripts": {
@@ -28,6 +28,8 @@
   "homepage": "https://github.com/gimdongwoo/parse-rest-nodejs#readme",
   "devDependencies": {
     "babel-cli": "^6.22.2",
-    "babel-preset-es2015": "^6.22.0"
+    "babel-preset-es2015": "^6.22.0",
+    "querystring": "^0.2.0",
+    "request": "^2.79.0"
   }
 }
