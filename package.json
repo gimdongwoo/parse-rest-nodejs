@@ -1,6 +1,6 @@
 {
   "name": "parse-rest-nodejs",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Parse-server Rest API client for Node.js",
   "main": "lib/index.js",
   "scripts": {

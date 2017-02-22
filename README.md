@@ -49,6 +49,14 @@ import ParseRest from 'parse-rest-nodejs';
 const parseRest = new ParseRest(req);
 ```
 
+```javascript
+// es5
+var ParseRest = require('parse-rest-nodejs').default;
+
+// req is express request
+var parseRest = new ParseRest(req);
+```
+
 ### insert an object
 
 ```javascript
