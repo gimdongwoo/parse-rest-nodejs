@@ -99,22 +99,23 @@ function restCall(method, url, data, _headers, formData) {
         break;
     }
   }
+
+  // add formData
+  if (formData) requestParams.formData = formData;
+
+  // log
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('method :', method);
+    console.log('requestParams :', requestParams);
+  }
+
   // file stream
   if (data && data.fileData) {
     requestParams.body = data.fileData.file;
     requestParams.headers['Content-Type'] = data.fileData.mimetype || 'text/plain';
   }
-  console.log('requestParams', requestParams);
-
-  // add formData
-  if (formData) requestParams.formData = formData;
 
   return new Promise((resolve, reject) => {
-    // log
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('method :', method);
-      console.log('requestParams :', requestParams);
-    }
     request[method](requestParams, (error, response, body) => {
       try {
         body = ((typeof body === 'string' && body) ? JSON.parse(body) : body);
