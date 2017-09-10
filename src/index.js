@@ -18,9 +18,9 @@ function makeHeaders(headers, req) {
   const _headers = Object.assign({}, _header, headers || {});
 
   // sessionToken from session
-  const { session = {} } = req;
+  const { session = {}, headers } = req;
   // req header first
-  const _sessionToken = req.get('sessionToken') || session.sessionToken || (session.user && session.user.sessionToken);
+  const _sessionToken = headers.sessionToken || session.sessionToken || (session.user && session.user.sessionToken);
   if (_sessionToken) {
     _headers['X-Parse-Session-Token'] = _sessionToken;
   }
