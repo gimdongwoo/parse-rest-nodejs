@@ -2,9 +2,9 @@ import request from 'request';
 import qs from 'querystring';
 
 const methods = ['get', 'post', 'put', 'patch', 'del'];
+// const DEFAULT_TIMEOUT = 15000;
 
 function makeHeaders(headers, req) {
-  // const DEFAULT_TIMEOUT = 8000;
   const _header = {
     'X-Parse-Application-Id': process.env.APP_ID || 'myAppId',
     'Content-Type': 'application/json'
